@@ -4,7 +4,7 @@ import { Writable } from "stream";
 import { resolve } from "path";
 
 class SlsOfflineDynamodbStreamPlugin {
-  config = {};
+  config: any = {};
 
   provider = "aws";
   commands = {};
@@ -21,7 +21,13 @@ class SlsOfflineDynamodbStreamPlugin {
 
   startReadableStreams() {
     const {
-      config: { endpoint, region, batchSize, pollForever = false } = {},
+      config: {
+        endpoint,
+        region,
+        batchSize,
+        pollForever = false,
+        interval = 2000,
+      } = {},
     } = this;
     const offlineConfig =
       this.serverless.service.custom["serverless-offline"] || {};
@@ -65,6 +71,7 @@ class SlsOfflineDynamodbStreamPlugin {
             pollForever,
             {
               highWaterMark: batchSize,
+              interval,
             }
           );
 

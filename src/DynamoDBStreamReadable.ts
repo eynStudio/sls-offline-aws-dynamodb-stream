@@ -18,7 +18,7 @@ function timeout(func, timeout, ...args) {
 }
 
 export class DynamoDBStreamReadable extends Readable {
-  constructor(client, streamArn, pollForever, options = {}) {
+  constructor(client, streamArn, pollForever, options: any = {}) {
     if (!client) {
       throw new Error("client is required");
     }
@@ -31,7 +31,7 @@ export class DynamoDBStreamReadable extends Readable {
     this.client = client;
     this.streamArn = streamArn;
     this.options = {
-      interval: 2000,
+      interval: options.interval || 2000,
       parser: JSON.parse,
     };
     this.pollForever = !!pollForever;
