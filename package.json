@@ -1,6 +1,6 @@
 {
   "name": "sls-offline-aws-dynamodb-stream",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {

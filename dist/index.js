@@ -18,7 +18,7 @@ class SlsOfflineDynamodbStreamPlugin {
         this.config = Object.assign(Object.assign({}, this.config), (_a = serverless.service.custom) === null || _a === void 0 ? void 0 : _a.dynamodbStream);
     }
     startReadableStreams() {
-        const { config: { endpoint, region, batchSize, pollForever = false } = {}, } = this;
+        const { config: { endpoint, region, batchSize, pollForever = false, interval = 2000, } = {}, } = this;
         const offlineConfig = this.serverless.service.custom["serverless-offline"] || {};
         const fns = this.serverless.service.functions;
         let location = process.cwd();
@@ -51,6 +51,7 @@ class SlsOfflineDynamodbStreamPlugin {
                         : new AWS.DynamoDBStreams({ region });
                     const readable = new DynamoDBStreamReadable_1.DynamoDBStreamReadable(ddbStream, streamArn, pollForever, {
                         highWaterMark: batchSize,
+                        interval,
                     });
                     const wriable = new stream_1.Writable({
                         write: (chunk = [], encoding, callback) => {

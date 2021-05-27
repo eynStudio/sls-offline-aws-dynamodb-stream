@@ -27,7 +27,7 @@ class DynamoDBStreamReadable extends stream_1.Readable {
         this.client = client;
         this.streamArn = streamArn;
         this.options = {
-            interval: 2000,
+            interval: options.interval || 2000,
             parser: JSON.parse,
         };
         this.pollForever = !!pollForever;
